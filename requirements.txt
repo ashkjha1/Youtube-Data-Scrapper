@@ -1,0 +1,5 @@
+pymongo
+selenium
+flask
+webdriver-manager
+flask-cors
