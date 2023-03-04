@@ -8,9 +8,9 @@ from flask import Flask, render_template, request
 import time
 import csv
 # import pymongo
-import logging
+# import logging
 
-logging.basicConfig(filename="YTscrapper.log" , level=logging.INFO)
+# logging.basicConfig(filename="YTscrapper.log" , level=logging.INFO)
 
 app = Flask(__name__)
 
@@ -66,7 +66,7 @@ def selenium_code(url):
                     else:
                         links.append(links_static)
             except:
-                logging.info("Video_hyperlink")
+                pass
 
             # for i in links[0:5]:
             #     print("Video Link",links.index(i),i)
@@ -82,7 +82,7 @@ def selenium_code(url):
                     else:
                         thumbnail.append(thumbnail_static) 
             except:
-                logging.info("Thubnail_Link")
+                pass
 
             # for i in thumbnail[0:5]:
             #     print("Thumbnail",thumbnail.index(i),i)
@@ -98,7 +98,7 @@ def selenium_code(url):
                     else:
                         title.append(title_static)
             except:
-                logging.info("Video_title")
+                pass
 
             # for i in title[0:5]:
             #     print("Title",title.index(i),i)
@@ -114,7 +114,7 @@ def selenium_code(url):
                     else:
                         view_count.append(view_static)
             except:
-                logging.info("Number_Of_View")
+                pass
 
             # for i in view_count[0:5]:
             #     print("View Count", view_count.index(i), i)       
@@ -130,7 +130,7 @@ def selenium_code(url):
                     else:
                         vid_time.append(time_static)
             except:
-                logging.info("Time_Of_Posting")
+                pass
 
             driver.quit()
             # for i in vid_time[0:5]:
@@ -153,23 +153,23 @@ def selenium_code(url):
                 }
                 result_data.append(result_dict)
             # print(result_dict)
-            logging.info("Log for final Result for web {}".format(result_dict))
+            # logging.info("Log for final Result for web {}".format(result_dict))
 
             for i in result_lst:
                 csvResultList.append(i)
             # print("csvResultList",csvResultList)
-            logging.info("Log for final Result for CSV {}".format(csvResultList))
+            # logging.info("Log for final Result for CSV {}".format(csvResultList))
 
-            with open("video_details.csv", 'w', encoding="utf-8") as f:
-                    w = csv.writer(f)
-                    for i in csvResultList:
-                        w.writerow(i)
-            time.sleep(5)
+            # with open("video_details.csv", 'w', encoding="utf-8") as f:
+            #         w = csv.writer(f)
+            #         for i in csvResultList:
+            #             w.writerow(i)
+            # time.sleep(5)
 
             return result_data
 
         except Exception as e:
-            logging.info(e)
+            # logging.info(e)
             return f"Something is wrong, Please check the URL again {e}"
 
 
