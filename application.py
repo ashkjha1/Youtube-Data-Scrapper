@@ -8,9 +8,9 @@ from flask import Flask, render_template, request
 import time
 import csv
 # import pymongo
-# import logging
+import logging
 
-# logging.basicConfig(filename="YTscrapper.log" , level=logging.INFO)
+logging.basicConfig(filename="YTscrapper.log" , level=logging.INFO)
 
 app = Flask(__name__)
 
@@ -153,17 +153,17 @@ def selenium_code(url):
                 }
                 result_data.append(result_dict)
             # print(result_dict)
-            # logging.info("Log for final Result for web {}".format(result_dict))
+            logging.info("Log for final Result for web {}".format(result_dict))
 
             for i in result_lst:
                 csvResultList.append(i)
             # print("csvResultList",csvResultList)
-            # logging.info("Log for final Result for CSV {}".format(csvResultList))
+            logging.info("Log for final Result for CSV {}".format(csvResultList))
 
-            # with open("video_details.csv", 'w', encoding="utf-8") as f:
-            #         w = csv.writer(f)
-            #         for i in csvResultList:
-            #             w.writerow(i)
+            with open("video_details.csv", 'w', encoding="utf-8") as f:
+                    w = csv.writer(f)
+                    for i in csvResultList:
+                        w.writerow(i)
             # time.sleep(5)
 
             return result_data
