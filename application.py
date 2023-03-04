@@ -1,10 +1,8 @@
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from flask_cors import CORS,cross_origin
+# from flask_cors import CORS,cross_origin
 import os
 from flask import Flask, render_template, request
 import time
@@ -17,7 +15,7 @@ logging.basicConfig(filename="YTscrapper.log" , level=logging.INFO)
 app = Flask(__name__)
 
 @app.route("/")
-@cross_origin()
+# @cross_origin()
 def searchPage():
     return render_template("index.html")
 
@@ -25,15 +23,17 @@ def searchPage():
 # url = "https://www.youtube.com/@PW-Foundation/videos"
 
 @app.route("/search_result", methods = ["POST", "GET"])
-@cross_origin()
+# @cross_origin()
 def run_automation():
     if request.method == "POST":
-        searchKey = request.form["searchkey"] # seachKey = @PW-Foundation
-        url = "https://www.youtube.com/{searchKey}/videos"
+        searchKey = request.form["searchkey"] # searchKey = @PW-Foundation
+        # url = "https://www.youtube.com/{searchKey}/videos" 
+        url = "https://www.youtube.com/@PW-Foundation/videos"
         try:
-            result_data = selenium_code(url)
-            # return render_template('result.html', result_data=result_data)
-            return result_data
+            result = selenium_code(url)
+            # time.sleep(50)
+            return render_template('result.html', result_data=result)
+            # return "result_data"
         except:
             return "Something went Wrong"
     else:
@@ -42,13 +42,13 @@ def run_automation():
 def selenium_code(url):
         try:
             csvResultList = [("title", "video_url", "video_thumbnail", "view_count", "timeofposting")]
-            s = Service(ChromeDriverManager().install())
-            driver = webdriver.Chrome(service=s)
-            # driver = webdriver.Chrome()
+            # s = Service(ChromeDriverManager().install())
+            # driver = webdriver.Chrome(service=s)
+            driver = webdriver.Chrome()
             driver.maximize_window()
             driver.get(url)
 
-            time_scroll = 3
+            time_scroll = 1
             # scroll youtube web page
             while time_scroll > 0:
                 driver.execute_script("window.scrollBy(0,500)")
@@ -132,6 +132,7 @@ def selenium_code(url):
             except:
                 logging.info("Time_Of_Posting")
 
+            driver.quit()
             # for i in vid_time[0:5]:
             #     print("Time of Posting", vid_time.index(i), i)
 
@@ -144,11 +145,11 @@ def selenium_code(url):
             result_data = []
             for t,l,th,v,vt in result_lst:
                 result_dict = {
-                    "title": str(t),
-                    "video_url": str(l),
-                    "video_thumbnail": str(th),
-                    "view_count": str(v),
-                    "timeofposting": str(vt)
+                    "video_title": t,
+                    "video_url": l,
+                    "video_thumbnail": th,
+                    "view_count": v,
+                    "timeofposting": vt
                 }
                 result_data.append(result_dict)
             # print(result_dict)
@@ -163,10 +164,9 @@ def selenium_code(url):
                     w = csv.writer(f)
                     for i in csvResultList:
                         w.writerow(i)
-            
-            return result_data
+            time.sleep(5)
 
-            driver.quit()
+            return result_data
 
         except Exception as e:
             logging.info(e)
@@ -175,4 +175,4 @@ def selenium_code(url):
 
     
 if __name__ == "__main__":
-    app.run(host = "0.0.0.0", port = 8000)
+    app.run(debug = True)

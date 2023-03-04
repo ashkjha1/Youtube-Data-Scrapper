@@ -17,23 +17,23 @@
 <body>
 
   <div class="table-users">
-   <div class="header">Reviews</div>
+   <div class="header">Scrapped Data</div>
 
    <table cellspacing="0">
       <tr>
-         <th>Title</th>
-         <th>Video URL</th>
-         <th>Thumbnail URL</th>
-         <th>View Count</th>
-         <th>Time of Posting</th>
+        <th>Video Title</th>
+        <th>Video URL</th>
+        <th>Thumbnail URL</th>
+        <th>View Count</th>
+        <th>Time of Posting</th>
       </tr>
-         {% for data in result_data %}
+        {% for data in result_data %}
       <tr>
-          <td>{{data['title']}}</td>
-         <td>{{data['video_url']}}</td>
-         <td>{{data['view_count']}}</td>
-         <td>{{data['view_count']}}</td>
-         <td>{{data['timeofposting']}} </td>
+        <td>{{data['video_title']}}</td>
+        <td>{{data['video_url']}}</td>
+        <td>{{data['video_thumbnail']}}</td>
+        <td>{{data['view_count']}}</td>
+        <td>{{data['timeofposting']}} </td>
        {% endfor %}
    </table>
 </div>
