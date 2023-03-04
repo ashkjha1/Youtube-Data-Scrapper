@@ -27,8 +27,8 @@ def searchPage():
 def run_automation():
     if request.method == "POST":
         searchKey = request.form["searchkey"] # searchKey = @PW-Foundation
-        # url = "https://www.youtube.com/{searchKey}/videos" 
-        url = "https://www.youtube.com/@PW-Foundation/videos"
+        url = f"https://www.youtube.com/{searchKey}/videos" 
+        # url = "https://www.youtube.com/@PW-Foundation/videos"
         try:
             result = selenium_code(url)
             # time.sleep(50)
