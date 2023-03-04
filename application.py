@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-# from flask_cors import CORS,cross_origin
+from flask_cors import CORS,cross_origin
 import os
 from flask import Flask, render_template, request
 import time
@@ -15,7 +15,7 @@ logging.basicConfig(filename="YTscrapper.log" , level=logging.INFO)
 app = Flask(__name__)
 
 @app.route("/")
-# @cross_origin()
+@cross_origin()
 def searchPage():
     return render_template("index.html")
 
@@ -23,7 +23,7 @@ def searchPage():
 # url = "https://www.youtube.com/@PW-Foundation/videos"
 
 @app.route("/search_result", methods = ["POST", "GET"])
-# @cross_origin()
+@cross_origin()
 def run_automation():
     if request.method == "POST":
         searchKey = request.form["searchkey"] # searchKey = @PW-Foundation
